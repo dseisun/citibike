@@ -45,12 +45,12 @@ def extract_all_files():
         if file.endswith('.zip'):
             with zipfile.ZipFile(os.path.join(data_path, file), 'r') as zip_ref:
                 # Return a list of files in the zip that are candidates for extraction. We expect only 1
-                files = list(filter(lambda x: x.endswith('.csv') and not x.startswith('__'), ref.namelist()))
+                files = list(filter(lambda x: x.endswith('.csv') and not x.startswith('__'), zip_ref.namelist()))
                 if len(files) == 1:
                     file = files[0]
                     zip_ref.extract(file, path='extracted_data/')
                 else:
-                    logging.error('Multiple eligible files found in %s. Not extracting' % key)
+                    logging.error('Multiple eligible files found in %s. Not extracting' % file)
 
 if __name__ == '__main__':
     logging.basicConfig(level=logging.DEBUG)
