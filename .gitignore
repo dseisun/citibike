@@ -6,3 +6,4 @@ extracted_data/
 test_data.csv
 data/
 .vscode/
+.DS_Store
