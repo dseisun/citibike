@@ -3,3 +3,4 @@ beautifulsoup4
 jupyterlab
 sqlalchemy
 psycopg2
+matplotlib
