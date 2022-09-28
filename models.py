@@ -4,7 +4,7 @@ from enum import unique
 from sqlalchemy.orm import declarative_base
 from sqlalchemy import Column, String, Integer, DateTime, Float, UniqueConstraint
 
-connection_string = 'postgresql://citibike:citibke@/citibike'
+connection_string = 'postgresql://citibike:citibike@/citibike'
 
 engine = create_engine(connection_string, echo=False, future=False) # Works around pandas to_sql bug that breaks with future == "True" - https://github.com/pandas-dev/pandas/issues/40686#issuecomment-872031119
 conn = engine.connect()
@@ -83,5 +83,7 @@ class StationLog(Base):
 
 
 if __name__ == '__main__':
+    conn.execute('CREATE SCHEMA IF NOT EXISTS prod')
+    conn.execute('CREATE SCHEMA IF NOT EXISTS staging')
     Base.metadata.drop_all(verbose_engine)
     Base.metadata.create_all(verbose_engine)
