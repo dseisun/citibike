@@ -4,9 +4,11 @@ from enum import unique
 from sqlalchemy.orm import declarative_base
 from sqlalchemy import Column, String, Integer, DateTime, Float, UniqueConstraint
 
-engine = create_engine("postgresql://dseisun@/citibike", echo=False, future=False) # Works around pandas to_sql bug that breaks with future == "True" - https://github.com/pandas-dev/pandas/issues/40686#issuecomment-872031119
+connection_string = 'postgresql://citibike:citibke@/citibike'
+
+engine = create_engine(connection_string, echo=False, future=False) # Works around pandas to_sql bug that breaks with future == "True" - https://github.com/pandas-dev/pandas/issues/40686#issuecomment-872031119
 conn = engine.connect()
-verbose_engine = create_engine("postgresql://dseisun@/citibike", echo=True, future=False)
+verbose_engine = create_engine(connection_string, echo=True, future=False)
 
 
 
