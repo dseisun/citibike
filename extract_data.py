@@ -19,17 +19,17 @@ data_path = 'data/'
 
 
 
-def get_keys_from_index(index_url) -> List[str]:
+def get_keys_from_index() -> List[str]:
     """Takes an index xml file, parses it and gets a list of all the files to download"""
     logging.info('Getting keys from index')
     resp = requests.get(index_url)
     parsed_xml = BeautifulSoup(resp.text, 'xml')
     return [content.Key.text for content in parsed_xml.ListBucketResult.find_all('Contents')]
 
-def pull_all_files(index_url) -> List[str]:
+def pull_all_files() -> List[str]:
     """Hits the citibike index and downloads all the files to the path provided
     Returns a list of filenames downloaded"""
-    keys: list[str] = get_keys_from_index(index_url)
+    keys: list[str] = get_keys_from_index()
     keys_to_files: Dict[str, str] = {}
     for key in keys:
         download_path = os.path.join(data_path, key)
@@ -54,5 +54,5 @@ def extract_all_files():
 
 if __name__ == '__main__':
     logging.basicConfig(level=logging.DEBUG)
-    pull_all_files(index_url)
+    pull_all_files()
     extract_all_files()
