@@ -78,24 +78,26 @@ def get_files(prefix='extracted_data'):
     """Return a tuple of the absolute path of the file and the filename"""
     return [(join(prefix, filename), filename) for filename in listdir(prefix)]
 
-def load_file_to_db(filename: str):
+def load_file_to_db(filename: str, load_trips, load_stations):
     """Load files to db"""
     logging.info('Reading file: %s' % filename)
     rf, cf = read_file(filename)
-    # logging.info('Loading trips from %s' % filename)
-    # trips_loaded = load_trips_to_db(cf)
-    # logging.info('Loaded %s trips to db from %s' % (trips_loaded, filename))
-    logging.info('Loading stations from %s' % filename)
-    stations_loaded = load_stations_to_db(cf)
-    logging.info('Loaded %s stations to db from %s' % (stations_loaded, filename))
-    logging.info('Merging stations from %s' % filename)
-    merge_stations()
-    logging.info('Merged stations from %s' % filename)
+    if load_trips:
+        logging.info('Loading trips from %s' % filename)
+        trips_loaded = load_trips_to_db(cf)
+        logging.info('Loaded %s trips to db from %s' % (trips_loaded, filename))
+    if load_stations:
+        logging.info('Loading stations from %s' % filename)
+        stations_loaded = load_stations_to_db(cf)
+        logging.info('Loaded %s stations to db from %s' % (stations_loaded, filename))
+        logging.info('Merging stations from %s' % filename)
+        merge_stations()
+        logging.info('Merged stations from %s' % filename)
 
-def load_file_header_type(fileheadertype: FileHeaderType, path_prefix='extracted_data') -> None:
+def load_file_header_type(fileheadertype: FileHeaderType, path_prefix='extracted_data', load_trips=True, load_stations=True) -> None:
     for filename in fileheadertype.filerange:
         logging.info('Loading %s file' % filename)
-        load_file_to_db(join(path_prefix, filename))
+        load_file_to_db(join(path_prefix, filename), load_trips=True, load_stations=True)
 
 if __name__ == '__main__':
     for fileheadertype in fileheadertypes:

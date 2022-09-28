@@ -7,7 +7,7 @@ logging.basicConfig(level=logging.INFO)
 
 
 class FileHeaderType():
-    
+    """Represents a range of files that all have a consistent set of headers"""
     def __init__(self, filerange: List[str], headers: List[str], header_mapping: Dict[str, str]) -> None:
         """Takes a list of file names and an ordered list of headers for those files"""
         self.filerange = filerange
