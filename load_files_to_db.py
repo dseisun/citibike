@@ -1,4 +1,6 @@
 # TODO: Use argparse to give a command line for what to load (single file, directory, etc...)
+# TODO: You only populate the stations table from starts, not ends.  If trips only end at a station, it won't be in the stations table
+# This tends to happen for maintenance stations
 from typing import Any, Dict
 from os.path import join
 import pandas as pd
