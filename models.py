@@ -16,17 +16,15 @@ Base = declarative_base()
 
 class Trip(Base):
     __table_args__ = {'schema': 'prod'}
-
     __tablename__ = 'trips'
 
     trip_id = Column(Integer, primary_key=True, autoincrement=True)
-    ride_id = Column(String(50))
     started_at = Column(DateTime)
     ended_at = Column(DateTime)
-    start_station_id = Column(String(50)) # TODO: Set FK here
-    end_station_id = Column(String(50)) # TODO: Set FK here
-    membership_status = Column(String(50)) # TODO: Enforce enum here
-    rideable_type = Column(String(50)) # TODO: Enforce enum here
+    start_station_name = Column(String(100)) # TODO: Set FK here
+    end_station_name = Column(String(100)) # TODO: Set FK here
+    membership_status = Column(String(50))
+    rideable_type = Column(String(50))
     filename = Column(String(50))
 
     @classmethod
@@ -43,23 +41,24 @@ class Trip(Base):
 class Station(Base):
     __table_args__ = {'schema': 'prod'}
     __tablename__ = 'stations'
-    
+
     station_id = Column(Integer, primary_key=True, autoincrement=True)
-    citi_station_id = Column(String(50), unique=True)
-    station_name = Column(String(100))
+    station_name = Column(String(100), unique=True)
     lat = Column(Float)
     long = Column(Float)
     first_trip_at = Column(DateTime)
     last_trip_at = Column(DateTime)
     created_at = Column(DateTime, server_default=func.now())
+    
+
+    
 
 
 class StationStaging(Base):
     __table_args__ = {'schema': 'staging'}
     __tablename__ = 'stations'
     
-    citi_station_id = Column(String(50), primary_key=True, unique=True)
-    station_name = Column(String(100))
+    station_name = Column(String(100),primary_key=True, unique=True)
     lat = Column(Float)
     long = Column(Float)
     first_trip_at = Column(DateTime)
@@ -72,7 +71,6 @@ class StationLog(Base):
     __tablename__ = 'stations_log'
     
     station_log_id = Column(Integer, primary_key=True, autoincrement=True)
-    citi_station_id = Column(String(50))
     station_name = Column(String(100))
     lat = Column(Float)
     long = Column(Float)
