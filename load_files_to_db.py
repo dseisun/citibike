@@ -11,7 +11,8 @@ from sqlalchemy.orm import sessionmaker
 from os import listdir
 from os.path import join
 import logging
-from file_header_types import CleanedFile, FileHeaderType, RawFile
+from file_header_types import FileHeaderType
+from file_types import CleanedFile, RawFile
 from models import StationStaging, engine, conn
 from sqlalchemy.orm import Session
 from models import Trip
@@ -21,7 +22,7 @@ logging.basicConfig(level=logging.INFO)
 
 
 def read_file(filename):
-    rf = RawFile(filename)
+    rf = RawFile(filename, fileheadertypes)
     cf: CleanedFile = CleanedFile(rf)
     return (rf, cf)
 
