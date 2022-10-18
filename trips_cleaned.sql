@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS prod.trips_cleaned;
 create table prod.trips_cleaned as 
  SELECT 
  	trips.started_at,
@@ -12,3 +13,6 @@ create table prod.trips_cleaned as
     trips.filename
    FROM prod.trips
   WHERE (trips.ended_at - trips.started_at) >= '00:00:00'::interval minute AND (trips.ended_at - trips.started_at) <= '02:00:00'::interval minute;
+-- Create indexes on the table for faster joining to stations
+CREATE INDEX trips_start_station_id ON prod.trips_cleaned (start_station_id ASC NULLS LAST);
+CREATE INDEX trips_end_station_id ON prod.trips_cleaned (end_station_id ASC NULLS LAST);
